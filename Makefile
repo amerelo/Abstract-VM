@@ -22,6 +22,7 @@ CORE =	main.cpp \
 		Print.class.cpp\
 		Exit.class.cpp\
 		Factory.class.cpp\
+		Execute.class.cpp\
 
 
 

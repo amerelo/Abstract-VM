@@ -18,7 +18,7 @@ class Pop : public Instruction
 		Pop &							operator=( Pop const & rhs );
 		friend std::ostream &				operator<<(std::ostream & o, Pop const & i);
 
-
+		void Execute(std::vector<IOperand const *> *stack);
 };
 
 #endif

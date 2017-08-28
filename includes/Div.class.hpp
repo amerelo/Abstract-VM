@@ -18,7 +18,7 @@ class Div : public Instruction
 		Div &							operator=( Div const & rhs );
 		friend std::ostream &				operator<<(std::ostream & o, Div const & i);
 
-
+		void Execute(std::vector<IOperand const *> *stack);
 };
 
 #endif

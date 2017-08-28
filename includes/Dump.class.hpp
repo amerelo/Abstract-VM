@@ -18,7 +18,7 @@ class Dump : public Instruction
 		Dump &							operator=( Dump const & rhs );
 		friend std::ostream &				operator<<(std::ostream & o, Dump const & i);
 
-
+		void Execute(std::vector<IOperand const *> *stack);
 };
 
 #endif

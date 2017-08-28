@@ -18,7 +18,7 @@ class Mod : public Instruction
 		Mod &							operator=( Mod const & rhs );
 		friend std::ostream &				operator<<(std::ostream & o, Mod const & i);
 
-
+		void Execute(std::vector<IOperand const *> *stack);
 };
 
 #endif

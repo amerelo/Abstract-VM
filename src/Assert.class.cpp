@@ -54,6 +54,13 @@ bool Assert::needValue()
 	return (true);
 }
 
+void Assert::Execute(std::vector<IOperand const *> * stack)
+{
+	Factory fac;
+
+	stack->insert(stack->begin(), fac.createOperand(Int8, "85"));
+}
+
 // ###############################################################
 
 // GETTER METHOD #################################################

@@ -19,6 +19,7 @@ class Assert : public Instruction
 		friend std::ostream &				operator<<(std::ostream & o, Assert const & i);
 
 		bool needValue();
+		void Execute(std::vector<IOperand const *> *stack);
 
 };
 

@@ -54,6 +54,13 @@ bool Push::needValue()
 	return (true);
 }
 
+void Push::Execute(std::vector<IOperand const *> * stack)
+{
+	Factory fac;
+
+	// std::cout << "enter" << std::endl;
+	stack->insert(stack->begin(), fac.createOperand(Int8, "85"));
+}
 
 // ###############################################################
 

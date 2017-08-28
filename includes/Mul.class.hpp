@@ -18,7 +18,7 @@ class Mul : public Instruction
 		Mul &							operator=( Mul const & rhs );
 		friend std::ostream &				operator<<(std::ostream & o, Mul const & i);
 
-
+		void Execute(std::vector<IOperand const *> *stack);
 };
 
 #endif

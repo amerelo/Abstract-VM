@@ -49,6 +49,13 @@ std::ostream &				operator<<(std::ostream & o, Pop const & i)
 
 // PUBLIC METHOD #################################################
 
+void Pop::Execute(std::vector<IOperand const *> * stack)
+{
+	Factory fac;
+
+	stack->insert(stack->begin(), fac.createOperand(Int8, "85"));
+}
+
 // ###############################################################
 
 // GETTER METHOD #################################################

@@ -18,6 +18,7 @@ class Add : public Instruction
 		Add &							operator=( Add const & rhs );
 		friend std::ostream &			operator<<(std::ostream & o, Add const & i);
 
+		void Execute(std::vector<IOperand const *> *stack);
 
 };
 

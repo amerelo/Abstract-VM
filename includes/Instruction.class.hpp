@@ -7,6 +7,11 @@
 # define INSTRUCTION_CLASS_HPP
 # include <iostream>
 # include <stdexcept>
+# include <vector>
+
+# include "Operation.class.hpp"
+# include "IOperand.class.hpp"
+
 
 class Instruction
 {
@@ -21,6 +26,7 @@ class Instruction
 
 		virtual bool isvalid(std::string line);
 		virtual bool needValue();
+		virtual void Execute(std::vector<IOperand const *> *stack);
 
 	private:
 			std::string _name;

@@ -18,6 +18,7 @@ class Exit : public Instruction
 		Exit &							operator=( Exit const & rhs );
 		friend std::ostream &				operator<<(std::ostream & o, Exit const & i);
 
+		void Execute(std::vector<IOperand const *> *stack);
 
 };
 

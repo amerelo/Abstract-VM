@@ -18,7 +18,7 @@ class Print : public Instruction
 		Print &							operator=( Print const & rhs );
 		friend std::ostream &				operator<<(std::ostream & o, Print const & i);
 
-
+		void Execute(std::vector<IOperand const *> *stack);
 };
 
 #endif

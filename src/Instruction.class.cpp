@@ -63,6 +63,13 @@ bool Instruction::needValue()
 	return (false);
 }
 
+void Instruction::Execute(std::vector<IOperand const *> * stack)
+{
+	Factory fac;
+
+	stack->insert(stack->begin(), fac.createOperand(Int8, "85"));
+}
+
 // ###############################################################
 
 // GETTER METHOD #################################################

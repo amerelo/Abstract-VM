@@ -18,7 +18,7 @@ class Sub : public Instruction
 		Sub &							operator=( Sub const & rhs );
 		friend std::ostream &				operator<<(std::ostream & o, Sub const & i);
 
-
+		void Execute(std::vector<IOperand const *> *stack);
 };
 
 #endif
