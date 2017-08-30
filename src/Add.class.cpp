@@ -11,6 +11,7 @@ Add::Add ( void )
 	return ;
 }
 
+
 Add::Add ( Add const & src )
 {
 	*this = src;
@@ -51,9 +52,16 @@ std::ostream &		operator<<(std::ostream & o, Add const & i)
 
 void Add::Execute(std::vector<IOperand const *> * stack)
 {
-	Factory fac;
-
-	stack->insert(stack->begin(), fac.createOperand(Int8, "85"));
+	if (stack->size() >= 2)
+	{
+		IOperand const * tmp1 = *(stack->begin());
+		IOperand const * tmp2 = *(stack->begin() + 1);
+		stack->erase(stack->begin());
+		stack->erase(stack->begin());
+		stack->insert(stack->begin(), *tmp2 + *tmp1);
+	}
+	else
+		throw NotEnoughElementsException();
 }
 
 
@@ -72,6 +80,11 @@ void Add::Execute(std::vector<IOperand const *> * stack)
 // ###############################################################
 
 // EXCEPTION METHOD ##############################################
+
+const char *Add::NotEnoughElementsException::what() const throw()
+{
+		return ("Not Enough Elements in stack");
+}
 
 // ###############################################################
 

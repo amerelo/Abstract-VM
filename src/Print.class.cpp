@@ -51,9 +51,15 @@ std::ostream &				operator<<(std::ostream & o, Print const & i)
 
 void Print::Execute(std::vector<IOperand const *> * stack)
 {
-	Factory fac;
+	IOperand const * first = *((*stack).begin());
 
-	stack->insert(stack->begin(), fac.createOperand(Int8, "85"));
+	if (first->getType() == 0)
+	{
+		char printable = std::stoi(first->toString());
+		std::cout << printable << std::endl;
+	}
+	else
+		throw PrintErrorException();
 }
 
 // ###############################################################
@@ -71,6 +77,11 @@ void Print::Execute(std::vector<IOperand const *> * stack)
 // ###############################################################
 
 // EXCEPTION METHOD ##############################################
+
+const char *Print::PrintErrorException::what() const throw()
+{
+	return ("Print Error");
+}
 
 // ###############################################################
 

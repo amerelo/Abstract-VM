@@ -56,9 +56,12 @@ bool Assert::needValue()
 
 void Assert::Execute(std::vector<IOperand const *> * stack)
 {
-	Factory fac;
+	IOperand const * first = *((*stack).begin());
 
-	stack->insert(stack->begin(), fac.createOperand(Int8, "85"));
+	if (first->toString() == this->_value)
+		std::cout << "Assert OK for value " << this->_value << std::endl;
+	else
+		throw AssertErrorsException();
 }
 
 // ###############################################################
@@ -76,6 +79,11 @@ void Assert::Execute(std::vector<IOperand const *> * stack)
 // ###############################################################
 
 // EXCEPTION METHOD ##############################################
+
+const char *Assert::AssertErrorsException::what() const throw()
+{
+		return ("Assert Error");
+}
 
 // ###############################################################
 

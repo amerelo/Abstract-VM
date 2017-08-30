@@ -8,7 +8,6 @@
 
 Instruction::Instruction ( void )
 {
-	this->_name = "instruction";
 	return ;
 }
 
@@ -22,7 +21,8 @@ Instruction &				Instruction::operator=( Instruction const & rhs )
 {
 	if (this != &rhs)
 	{
-		// make stuff
+		this->_type = rhs._type;
+		this->_value = rhs._value;
 	}
 	return (*this);
 }
@@ -50,26 +50,39 @@ std::ostream &				operator<<(std::ostream & o, Instruction const & i)
 
 // PUBLIC METHOD #################################################
 
-bool Instruction::isvalid(std::string line)
-{
-	if (line != "toto")
-		std::cout << "Valide" << std::endl;
-
-	return (true);
-}
 
 bool Instruction::needValue()
 {
 	return (false);
 }
 
-void Instruction::Execute(std::vector<IOperand const *> * stack)
+void Instruction::getValue(std::string type, std::string value)
 {
-	Factory fac;
+	if (type == "int8")
+		_type = Int8;
+	else if (type == "int16")
+		_type = Int16;
+	else if (type == "int32")
+		_type = Int32;
+	else if (type == "float")
+		_type = Float;
+	else if (type == "double")
+		_type = Double;
 
-	stack->insert(stack->begin(), fac.createOperand(Int8, "85"));
+	this->_value = value;
+	return ;
 }
 
+std::string Instruction::toString()
+{
+	return (this->_value);
+}
+
+void Instruction::Execute(std::vector<IOperand const *> * stack)
+{
+	(void)stack;
+	std::cout << "Instruction" << std::endl;
+}
 // ###############################################################
 
 // GETTER METHOD #################################################

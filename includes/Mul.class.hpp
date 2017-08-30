@@ -10,7 +10,12 @@
 class Mul : public Instruction
 {
 	public:
-
+		class NotEnoughElementsException : public std::exception
+		{
+		public:
+			virtual const char *what() const throw();
+		};
+		
 		Mul( void );
 		Mul( Mul const & src );
 		virtual ~Mul( void );

@@ -51,9 +51,8 @@ std::ostream &				operator<<(std::ostream & o, Dump const & i)
 
 void Dump::Execute(std::vector<IOperand const *> * stack)
 {
-	Factory fac;
-
-	stack->insert(stack->begin(), fac.createOperand(Int8, "85"));
+	for (size_t z = 0; z < stack->size(); z++)
+		std::cout << (*stack)[z]->toString() << std::endl;
 }
 
 // ###############################################################

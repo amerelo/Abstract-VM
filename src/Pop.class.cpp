@@ -51,9 +51,10 @@ std::ostream &				operator<<(std::ostream & o, Pop const & i)
 
 void Pop::Execute(std::vector<IOperand const *> * stack)
 {
-	Factory fac;
-
-	stack->insert(stack->begin(), fac.createOperand(Int8, "85"));
+	if (!stack->empty())
+		stack->erase(stack->begin());
+	else
+		throw EmptyStackException();
 }
 
 // ###############################################################
@@ -71,6 +72,11 @@ void Pop::Execute(std::vector<IOperand const *> * stack)
 // ###############################################################
 
 // EXCEPTION METHOD ##############################################
+
+const char *Pop::EmptyStackException::what() const throw()
+{
+	return ("Empty Stack");
+}
 
 // ###############################################################
 

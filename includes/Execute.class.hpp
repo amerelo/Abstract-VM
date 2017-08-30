@@ -16,9 +16,14 @@
 class Execute
 {
 	public:
+		class NoExitException : public std::exception
+		{
+		public:
+			virtual const char *what() const throw();
+		};
 
 		Execute( void );
-		Execute( std::vector<std::vector<std::string>> myfile );
+		Execute(std::vector<Instruction *>  iList);
 		Execute( Execute const & src );
 		virtual ~Execute( void );
 

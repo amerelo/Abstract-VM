@@ -10,8 +10,13 @@
 class Assert : public Instruction
 {
 	public:
-
-		Assert( void );
+		class AssertErrorsException : public std::exception
+		{
+		public:
+			virtual const char *what() const throw();
+		};
+		
+		Assert(void);
 		Assert( Assert const & src );
 		virtual ~Assert( void );
 
@@ -20,7 +25,6 @@ class Assert : public Instruction
 
 		bool needValue();
 		void Execute(std::vector<IOperand const *> *stack);
-
 };
 
 #endif

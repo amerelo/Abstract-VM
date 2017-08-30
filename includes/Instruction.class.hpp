@@ -24,13 +24,14 @@ class Instruction
 		Instruction &						operator=( Instruction const & rhs );
 		friend std::ostream &				operator<<(std::ostream & o, Instruction const & i);
 
-		virtual bool isvalid(std::string line);
 		virtual bool needValue();
+		virtual void getValue(std::string type, std::string value);
 		virtual void Execute(std::vector<IOperand const *> *stack);
+		virtual std::string toString();
 
-	private:
-			std::string _name;
-
+	protected:
+		eOperandType _type;
+		std::string _value;
 };
 
 #endif

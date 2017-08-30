@@ -10,6 +10,11 @@
 class Sub : public Instruction
 {
 	public:
+		class NotEnoughElementsException : public std::exception
+		{
+		public:
+			virtual const char *what() const throw();
+		};
 
 		Sub( void );
 		Sub( Sub const & src );

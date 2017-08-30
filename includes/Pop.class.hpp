@@ -10,6 +10,11 @@
 class Pop : public Instruction
 {
 	public:
+		class EmptyStackException : public std::exception
+		{
+		public:
+			virtual const char *what() const throw();
+		};
 
 		Pop( void );
 		Pop( Pop const & src );

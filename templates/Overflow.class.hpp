@@ -7,12 +7,19 @@
 template<typename T>
 struct Overflow
 {
+	class OverflownException : public std::exception
+	{
+	public:
+		virtual const char *what() const throw()
+		{
+			return ("Overflow");
+		}
+	};
+
 	Overflow(long double value)
 	{
 		if (value < std::numeric_limits<T>::min() || value > std::numeric_limits<T>::max())
-			std::cout << "Error" << std::endl;
-		else
-			std::cout << "value OK > " << value << std::endl;
+			throw OverflownException();
 		return;
 	}
 };

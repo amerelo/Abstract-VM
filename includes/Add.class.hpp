@@ -10,8 +10,13 @@
 class Add : public Instruction
 {
 	public:
+		class NotEnoughElementsException : public std::exception
+		{
+		public:
+			virtual const char *what() const throw();
+		};
 
-		Add( void );
+		Add(void);
 		Add( Add const & src );
 		virtual ~Add( void );
 
@@ -19,7 +24,6 @@ class Add : public Instruction
 		friend std::ostream &			operator<<(std::ostream & o, Add const & i);
 
 		void Execute(std::vector<IOperand const *> *stack);
-
 };
 
 #endif

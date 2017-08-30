@@ -10,7 +10,6 @@
 class Dump : public Instruction
 {
 	public:
-
 		Dump( void );
 		Dump( Dump const & src );
 		virtual ~Dump( void );
@@ -19,6 +18,7 @@ class Dump : public Instruction
 		friend std::ostream &				operator<<(std::ostream & o, Dump const & i);
 
 		void Execute(std::vector<IOperand const *> *stack);
+
 };
 
 #endif

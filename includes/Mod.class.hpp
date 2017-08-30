@@ -10,6 +10,11 @@
 class Mod : public Instruction
 {
 	public:
+		class NotEnoughElementsException : public std::exception
+		{
+		public:
+			virtual const char *what() const throw();
+		};
 
 		Mod( void );
 		Mod( Mod const & src );

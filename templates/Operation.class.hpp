@@ -12,26 +12,24 @@ template<typename T>
 class Operation : public IOperand
 {
 
-private:
-	// T	_value;
-
 public:
-	// class IOperationException : public std::exception {
-	//
-	// }
-	//
-	// template<T>class OperationException : public IOperationException {
-	//
-	// }
+	class ZeroDivisionException : public std::exception
+	{
+	public:
+		virtual const char *what() const throw()
+		{
+			return ("division by 0");
+		}
+	};
 
-	// class BadInstructionException : public std::exception
-	// {
-	// public:
-	// 	virtual const char *what() const throw
-	// 	{
-	// 		return ("No Valid Command");
-	// 	}
-	// };
+	class ModErrorException : public std::exception
+	{
+	public:
+		virtual const char *what() const throw()
+		{
+			return ("No Modulo for decimal numbers");
+		}
+	};
 
 	Operation ( void ) : _value("0"), _type(Int8)
 	{
@@ -41,16 +39,37 @@ public:
 
 	Operation ( std::string value ) : _value(value)
 	{
+		double myvalue = std::stod(value);
+
 		if (std::is_same<T, int8_t>::value)
+		{
 			this->_type = Int8;
+			myvalue = static_cast<long>(myvalue);
+			Overflow<int8_t> test(myvalue);
+		}
 		else if (std::is_same<T, int8_t>::value)
+		{
 			this->_type = Int16;
+			myvalue = static_cast<long>(myvalue);
+			Overflow<int16_t> test(myvalue);
+		}
 		else if (std::is_same<T, int32_t>::value)
+		{
 			this->_type = Int32;
+			myvalue = static_cast<long>(myvalue);
+			Overflow<int32_t> test(myvalue);
+		}
 		else if (std::is_same<T, float>::value)
+		{
 			this->_type = Float;
+			Overflow<float> test(myvalue);
+		}
 		else if (std::is_same<T, double>::value)
+		{
 			this->_type = Double;
+			Overflow<double> test(myvalue);
+		}
+
 		return ;
 	}
 
@@ -194,10 +213,7 @@ public:
 		eOperandType p = (this->getPrecision() > rhs.getPrecision()) ? this->getType() : rhs.getType();
 
 		if (std::stod(rhs.toString()) == 0)
-		{
-			std::cout << "error / 0 " << std::endl;
-			return (NULL);
-		}
+			throw Operation::ZeroDivisionException();
 
 		if (p < 3)
 		{
@@ -228,6 +244,9 @@ public:
 		Factory fac;
 		eOperandType p = (this->getPrecision() > rhs.getPrecision()) ? this->getType() : rhs.getType();
 
+		if (std::stod(rhs.toString()) == 0)
+			throw Operation::ZeroDivisionException();
+
 		if (p < 3)
 		{
 			long value = 0;
@@ -241,13 +260,7 @@ public:
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 		else
-		{
-			// float
-			std::cout << "error" << std::endl;
-			// double
-			std::cout << "error" << std::endl;
-			return (NULL);
-		}
+			throw Operation::ModErrorException();
 	}
 
 private:

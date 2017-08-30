@@ -1,8 +1,8 @@
 NAME = avm
 
-FLAGS = -Wall -Wextra -Werror -std=c++1z
+FLAGS = -std=c++1z -Wall -Wextra -Werror
 
-INCLUDES= -I includes/ -I templates/ -I interfaces/
+INCLUDES= -I includes/ -I templates/ -I interfaces/ -ggdb
 
 CPP_DIR=src
 

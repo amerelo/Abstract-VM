@@ -51,9 +51,8 @@ std::ostream &				operator<<(std::ostream & o, Exit const & i)
 
 void Exit::Execute(std::vector<IOperand const *> * stack)
 {
-	Factory fac;
-
-	stack->insert(stack->begin(), fac.createOperand(Int8, "85"));
+	(void)stack;
+	throw Exit::ExitException();
 }
 
 // ###############################################################
@@ -71,6 +70,11 @@ void Exit::Execute(std::vector<IOperand const *> * stack)
 // ###############################################################
 
 // EXCEPTION METHOD ##############################################
+
+const char *Exit::ExitException::what() const throw()
+{
+	return ("Exit");
+}
 
 // ###############################################################
 
