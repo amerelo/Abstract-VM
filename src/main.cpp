@@ -9,7 +9,7 @@ int main(int ac, char **av)
 	Factory myFac;
 	Lexer lexer = Lexer();
 	std::vector<Instruction *> iList;
-	int files = 1;
+	int files = 0;
 
 	static std::map<std::string, Instruction *> my_map =
 	{
@@ -26,7 +26,10 @@ int main(int ac, char **av)
 	{
 		try
 		{
-			iList = (ac > 1) ? lexer.getfile(av[files], my_map) : lexer.getTerminal(my_map);
+			if (ac ==  1)
+				iList = lexer.getTerminal(my_map);
+			else
+				iList = lexer.getfile(av[files], my_map);
 			Execute exec(iList);
 		}
 		catch (std::exception & e)

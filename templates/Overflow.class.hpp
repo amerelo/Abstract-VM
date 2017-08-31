@@ -16,11 +16,27 @@ struct Overflow
 		}
 	};
 
-	Overflow(long double value)
+	Overflow(long double value, int t)
+	{
+		if (t == 0)
+			IntOverflow(value);
+		else if (t == 1)
+			DecimalOverflow(value);
+		return;
+	}
+
+
+	void IntOverflow(long value)
 	{
 		if (value < std::numeric_limits<T>::min() || value > std::numeric_limits<T>::max())
 			throw OverflownException();
 		return;
+	}
+
+	void DecimalOverflow(long double value)
+	{
+		if (value < -std::numeric_limits<T>::max() || value > std::numeric_limits<T>::max())
+			throw OverflownException();
 	}
 };
 

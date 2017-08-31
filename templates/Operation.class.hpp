@@ -72,35 +72,35 @@ public:
 		{
 			this->_type = Int8;
 			myvalue = static_cast<long>(myvalue);
-			Overflow<int8_t> test(myvalue);
+			Overflow<int8_t> test(myvalue, 0);
 		}
 		else if (std::is_same<T, int16_t>::value)
 		{
 			this->_type = Int16;
 			myvalue = static_cast<long>(myvalue);
-			Overflow<int16_t> test(myvalue);
+			Overflow<int16_t> test(myvalue, 0);
 		}
 		else if (std::is_same<T, int32_t>::value)
 		{
 			this->_type = Int32;
 			myvalue = static_cast<long>(myvalue);
-			Overflow<int32_t> test(myvalue);
+			Overflow<int32_t> test(myvalue, 0);
 		}
 		else if (std::is_same<T, int64_t>::value)
 		{
 			this->_type = Int64;
 			myvalue = static_cast<long>(myvalue);
-			Overflow<int64_t> test(myvalue);
+			Overflow<int64_t> test(myvalue, 0);
 		}
 		else if (std::is_same<T, float>::value)
 		{
 			this->_type = Float;
-			Overflow<float> test(myvalue);
+			Overflow<float> test(myvalue, 1);
 		}
 		else if (std::is_same<T, double>::value)
 		{
 			this->_type = Double;
-			Overflow<double> test(myvalue);
+			Overflow<double> test(myvalue, 1);
 		}
 
 		return ;
@@ -162,13 +162,13 @@ public:
 			long value = std::stoi(this->toString()) + std::stoi(rhs.toString());
 
 			if (p == Int8)
-				Overflow<int8_t> test(value);
+				Overflow<int8_t> test(value, 0);
 			else if (p == Int16)
-				Overflow<int16_t> test(value);
+				Overflow<int16_t> test(value, 0);
 			else if (p == Int32)
-				Overflow<int32_t> test(value);
+				Overflow<int32_t> test(value, 0);
 			else if (p == Int64)
-				Overflow<int64_t> test(value);
+				Overflow<int64_t> test(value, 0);
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 		else
@@ -176,9 +176,9 @@ public:
 			double value =  std::stod(this->toString()) + std::stod(rhs.toString());
 
 			if (p == Float)
-				Overflow<float> test(value);
+				Overflow<float> test(value, 1);
 			else if (p == Double)
-				Overflow<double> test(value);
+				Overflow<double> test(value, 1);
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 	}
@@ -193,13 +193,13 @@ public:
 			long value = 0;
 			value = std::stoi(this->toString()) - std::stoi(rhs.toString());
 			if ( p == Int8)
-				Overflow<int8_t> test(value);
+				Overflow<int8_t> test(value, 0);
 			else if (p == Int16)
-				Overflow<int16_t> test(value);
+				Overflow<int16_t> test(value, 0);
 			else if (p == Int32)
-				Overflow<int32_t> test(value);
+				Overflow<int32_t> test(value, 0);
 			else if (p == Int64)
-				Overflow<int64_t> test(value);
+				Overflow<int64_t> test(value, 0);
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 		else
@@ -207,9 +207,9 @@ public:
 			double value = 0;
 			value =  std::stod(this->toString()) - std::stod(rhs.toString());
 			if (p == Float)
-				Overflow<float> test(value);
+				Overflow<float> test(value, 1);
 			else if (p == Double)
-				Overflow<double> test(value);
+				Overflow<double> test(value, 1);
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 	}
@@ -224,13 +224,13 @@ public:
 			long value = 0;
 			value = std::stoi(this->toString()) * std::stoi(rhs.toString());
 			if ( p == Int8)
-				Overflow<int8_t> test(value);
+				Overflow<int8_t> test(value, 0);
 			else if (p == Int16)
-				Overflow<int16_t> test(value);
+				Overflow<int16_t> test(value, 0);
 			else if (p == Int32)
-				Overflow<int32_t> test(value);
+				Overflow<int32_t> test(value, 0);
 			else if (p == Int64)
-				Overflow<int64_t> test(value);
+				Overflow<int64_t> test(value, 0);
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 		else
@@ -238,9 +238,9 @@ public:
 			double value = 0;
 			value =  std::stod(this->toString()) * std::stod(rhs.toString());
 			if (p == Float)
-				Overflow<float> test(value);
+				Overflow<float> test(value, 1);
 			else if (p == Double)
-				Overflow<double> test(value);
+				Overflow<double> test(value, 1);
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 	}
@@ -258,13 +258,13 @@ public:
 			long value = 0;
 			value = std::stoi(this->toString()) / std::stoi(rhs.toString());
 			if ( p == Int8)
-				Overflow<int8_t> test(value);
+				Overflow<int8_t> test(value, 0);
 			else if (p == Int16)
-				Overflow<int16_t> test(value);
+				Overflow<int16_t> test(value, 0);
 			else if (p == Int32)
-				Overflow<int32_t> test(value);
+				Overflow<int32_t> test(value, 0);
 			else if (p == Int64)
-				Overflow<int64_t> test(value);
+				Overflow<int64_t> test(value, 0);
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 		else
@@ -272,9 +272,9 @@ public:
 			double value = 0;
 			value =  std::stod(this->toString()) / std::stod(rhs.toString());
 			if (p == Float)
-				Overflow<float> test(value);
+				Overflow<float> test(value, 1);
 			else if (p == Double)
-				Overflow<double> test(value);
+				Overflow<double> test(value, 1);
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 	}
@@ -292,13 +292,13 @@ public:
 			long value = 0;
 			value = std::stoi(this->toString()) * std::stoi(rhs.toString());
 			if ( p == Int8)
-				Overflow<int8_t> test(value);
+				Overflow<int8_t> test(value, 0);
 			else if (p == Int16)
-				Overflow<int16_t> test(value);
+				Overflow<int16_t> test(value, 0);
 			else if (p == Int32)
-				Overflow<int32_t> test(value);
+				Overflow<int32_t> test(value, 0);
 			else if (p == Int64)
-				Overflow<int64_t> test(value);
+				Overflow<int64_t> test(value, 0);
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 		else
@@ -315,13 +315,13 @@ public:
 			long value = 0;
 			value = std::stoi(this->toString()) & std::stoi(rhs.toString());
 			if ( p == Int8)
-				Overflow<int8_t> test(value);
+				Overflow<int8_t> test(value, 0);
 			else if (p == Int16)
-				Overflow<int16_t> test(value);
+				Overflow<int16_t> test(value, 0);
 			else if (p == Int32)
-				Overflow<int32_t> test(value);
+				Overflow<int32_t> test(value, 0);
 			else if (p == Int64)
-				Overflow<int64_t> test(value);
+				Overflow<int64_t> test(value, 0);
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 		else
@@ -338,13 +338,13 @@ public:
 			long value = 0;
 			value = std::stoi(this->toString()) | std::stoi(rhs.toString());
 			if ( p == Int8)
-				Overflow<int8_t> test(value);
+				Overflow<int8_t> test(value, 0);
 			else if (p == Int16)
-				Overflow<int16_t> test(value);
+				Overflow<int16_t> test(value, 0);
 			else if (p == Int32)
-				Overflow<int32_t> test(value);
+				Overflow<int32_t> test(value, 0);
 			else if (p == Int64)
-				Overflow<int64_t> test(value);
+				Overflow<int64_t> test(value, 0);
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 		else
@@ -361,13 +361,13 @@ public:
 			long value = 0;
 			value = std::stoi(this->toString()) ^ std::stoi(rhs.toString());
 			if ( p == Int8)
-				Overflow<int8_t> test(value);
+				Overflow<int8_t> test(value, 0);
 			else if (p == Int16)
-				Overflow<int16_t> test(value);
+				Overflow<int16_t> test(value, 0);
 			else if (p == Int32)
-				Overflow<int32_t> test(value);
+				Overflow<int32_t> test(value, 0);
 			else if (p == Int64)
-				Overflow<int64_t> test(value);
+				Overflow<int64_t> test(value, 0);
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 		else
