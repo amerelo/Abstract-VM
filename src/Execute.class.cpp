@@ -18,14 +18,16 @@ Execute::Execute (std::vector<Instruction *> iList)
 	try
 	{
 		for(size_t i = 0; i < iList.size(); i++)
-		iList[i]->Execute(&stack);
+			iList[i]->Execute(&stack);
 	}
 	catch (Exit::ExitException & e)
 	{
+		this->DeleteV (&stack, &iList);
 		return ;
 	}
+	this->DeleteV (&stack, &iList);
 	throw Execute::NoExitException();
-	return;
+	return ;
 }
 
 Execute::Execute ( Execute const & src )
@@ -34,7 +36,7 @@ Execute::Execute ( Execute const & src )
 	return ;
 }
 
-Execute &				Execute::operator=( Execute const & rhs )
+Execute &		Execute::operator=( Execute const & rhs )
 {
 	if (this != &rhs)
 	{
@@ -77,6 +79,17 @@ std::ostream &				operator<<(std::ostream & o, Execute const & i)
 // ###############################################################
 
 // PRIVATE METHOD ################################################
+
+void Execute::DeleteV (std::vector<IOperand const *> *stack, std::vector<Instruction *> *iList)
+{
+	for (size_t z = 0; z < (*stack).size(); z++)
+		delete (*stack)[z];
+	for(size_t i = 0; i < (*iList).size(); i++)
+	{
+		if ((*iList)[i]->needValue())
+			delete (*iList)[i];
+	}
+}
 
 // ###############################################################
 

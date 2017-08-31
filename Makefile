@@ -23,6 +23,9 @@ CORE =	main.cpp \
 		Exit.class.cpp\
 		Factory.class.cpp\
 		Execute.class.cpp\
+		And.class.cpp\
+		Or.class.cpp\
+		Xor.class.cpp\
 
 
 

@@ -52,7 +52,10 @@ std::ostream &				operator<<(std::ostream & o, Pop const & i)
 void Pop::Execute(std::vector<IOperand const *> * stack)
 {
 	if (!stack->empty())
+	{
+		delete *stack->begin();
 		stack->erase(stack->begin());
+	}
 	else
 		throw EmptyStackException();
 }

@@ -66,6 +66,11 @@ IOperand const * Factory::createInt32( std::string const & value ) const
 	return (new Operation<int32_t>(value));
 }
 
+IOperand const * Factory::createInt64( std::string const & value ) const
+{
+	return (new Operation<int64_t>(value));
+}
+
 IOperand const * Factory::createFloat( std::string const & value ) const
 {
 	return (new Operation<float>(value));
@@ -78,10 +83,10 @@ IOperand const * Factory::createDouble( std::string const & value ) const
 
 IOperand const * Factory::createOperand( eOperandType type, std::string const & value ) const
 {
-	static Create fac[5] =
+	static Create fac[6] =
 	{
 		&Factory::createInt8, &Factory::createInt16, &Factory::createInt32,
-		&Factory::createFloat, &Factory::createDouble
+		&Factory::createInt64, &Factory::createFloat, &Factory::createDouble
 	};
 	return ((this->*fac[type])(value));
 }

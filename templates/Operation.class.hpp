@@ -31,6 +31,33 @@ public:
 		}
 	};
 
+	class AndErrorException : public std::exception
+	{
+	public:
+		virtual const char *what() const throw()
+		{
+			return ("No And for decimal numbers");
+		}
+	};
+
+	class OrErrorException : public std::exception
+	{
+	public:
+		virtual const char *what() const throw()
+		{
+			return ("No Or for decimal numbers");
+		}
+	};
+
+	class XorErrorException : public std::exception
+	{
+	public:
+		virtual const char *what() const throw()
+		{
+			return ("No Xor for decimal numbers");
+		}
+	};
+
 	Operation ( void ) : _value("0"), _type(Int8)
 	{
 		this->cast();
@@ -47,7 +74,7 @@ public:
 			myvalue = static_cast<long>(myvalue);
 			Overflow<int8_t> test(myvalue);
 		}
-		else if (std::is_same<T, int8_t>::value)
+		else if (std::is_same<T, int16_t>::value)
 		{
 			this->_type = Int16;
 			myvalue = static_cast<long>(myvalue);
@@ -58,6 +85,12 @@ public:
 			this->_type = Int32;
 			myvalue = static_cast<long>(myvalue);
 			Overflow<int32_t> test(myvalue);
+		}
+		else if (std::is_same<T, int64_t>::value)
+		{
+			this->_type = Int64;
+			myvalue = static_cast<long>(myvalue);
+			Overflow<int64_t> test(myvalue);
 		}
 		else if (std::is_same<T, float>::value)
 		{
@@ -124,23 +157,24 @@ public:
 	{
 		Factory fac;
 		eOperandType p = (this->getPrecision() > rhs.getPrecision()) ? this->getType() : rhs.getType();
-
-		if (p < 3)
+		if (p < 4)
 		{
-			long value = 0;
-			value = std::stoi(this->toString()) + std::stoi(rhs.toString());
-			if ( p == Int8)
+			long value = std::stoi(this->toString()) + std::stoi(rhs.toString());
+
+			if (p == Int8)
 				Overflow<int8_t> test(value);
 			else if (p == Int16)
 				Overflow<int16_t> test(value);
 			else if (p == Int32)
 				Overflow<int32_t> test(value);
+			else if (p == Int64)
+				Overflow<int64_t> test(value);
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 		else
 		{
-			double value = 0;
-			value =  std::stod(this->toString()) + std::stod(rhs.toString());
+			double value =  std::stod(this->toString()) + std::stod(rhs.toString());
+
 			if (p == Float)
 				Overflow<float> test(value);
 			else if (p == Double)
@@ -154,7 +188,7 @@ public:
 		Factory fac;
 		eOperandType p = (this->getPrecision() > rhs.getPrecision()) ? this->getType() : rhs.getType();
 
-		if (p < 3)
+		if (p < 4)
 		{
 			long value = 0;
 			value = std::stoi(this->toString()) - std::stoi(rhs.toString());
@@ -164,6 +198,8 @@ public:
 				Overflow<int16_t> test(value);
 			else if (p == Int32)
 				Overflow<int32_t> test(value);
+			else if (p == Int64)
+				Overflow<int64_t> test(value);
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 		else
@@ -183,7 +219,7 @@ public:
 		Factory fac;
 		eOperandType p = (this->getPrecision() > rhs.getPrecision()) ? this->getType() : rhs.getType();
 
-		if (p < 3)
+		if (p < 4)
 		{
 			long value = 0;
 			value = std::stoi(this->toString()) * std::stoi(rhs.toString());
@@ -193,6 +229,8 @@ public:
 				Overflow<int16_t> test(value);
 			else if (p == Int32)
 				Overflow<int32_t> test(value);
+			else if (p == Int64)
+				Overflow<int64_t> test(value);
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 		else
@@ -215,7 +253,7 @@ public:
 		if (std::stod(rhs.toString()) == 0)
 			throw Operation::ZeroDivisionException();
 
-		if (p < 3)
+		if (p < 4)
 		{
 			long value = 0;
 			value = std::stoi(this->toString()) / std::stoi(rhs.toString());
@@ -225,6 +263,8 @@ public:
 				Overflow<int16_t> test(value);
 			else if (p == Int32)
 				Overflow<int32_t> test(value);
+			else if (p == Int64)
+				Overflow<int64_t> test(value);
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 		else
@@ -247,7 +287,7 @@ public:
 		if (std::stod(rhs.toString()) == 0)
 			throw Operation::ZeroDivisionException();
 
-		if (p < 3)
+		if (p < 4)
 		{
 			long value = 0;
 			value = std::stoi(this->toString()) * std::stoi(rhs.toString());
@@ -257,10 +297,81 @@ public:
 				Overflow<int16_t> test(value);
 			else if (p == Int32)
 				Overflow<int32_t> test(value);
+			else if (p == Int64)
+				Overflow<int64_t> test(value);
 			return (fac.createOperand(p, std::to_string(value)));
 		}
 		else
 			throw Operation::ModErrorException();
+	}
+
+	IOperand const * operator&( IOperand const & rhs ) const
+	{
+		Factory fac;
+		eOperandType p = (this->getPrecision() > rhs.getPrecision()) ? this->getType() : rhs.getType();
+
+		if (p < 4)
+		{
+			long value = 0;
+			value = std::stoi(this->toString()) & std::stoi(rhs.toString());
+			if ( p == Int8)
+				Overflow<int8_t> test(value);
+			else if (p == Int16)
+				Overflow<int16_t> test(value);
+			else if (p == Int32)
+				Overflow<int32_t> test(value);
+			else if (p == Int64)
+				Overflow<int64_t> test(value);
+			return (fac.createOperand(p, std::to_string(value)));
+		}
+		else
+			throw Operation::AndErrorException();
+	}
+
+	IOperand const * operator|( IOperand const & rhs ) const
+	{
+		Factory fac;
+		eOperandType p = (this->getPrecision() > rhs.getPrecision()) ? this->getType() : rhs.getType();
+
+		if (p < 4)
+		{
+			long value = 0;
+			value = std::stoi(this->toString()) | std::stoi(rhs.toString());
+			if ( p == Int8)
+				Overflow<int8_t> test(value);
+			else if (p == Int16)
+				Overflow<int16_t> test(value);
+			else if (p == Int32)
+				Overflow<int32_t> test(value);
+			else if (p == Int64)
+				Overflow<int64_t> test(value);
+			return (fac.createOperand(p, std::to_string(value)));
+		}
+		else
+			throw Operation::OrErrorException();
+	}
+
+	IOperand const * operator^( IOperand const & rhs ) const
+	{
+		Factory fac;
+		eOperandType p = (this->getPrecision() > rhs.getPrecision()) ? this->getType() : rhs.getType();
+
+		if (p < 4)
+		{
+			long value = 0;
+			value = std::stoi(this->toString()) ^ std::stoi(rhs.toString());
+			if ( p == Int8)
+				Overflow<int8_t> test(value);
+			else if (p == Int16)
+				Overflow<int16_t> test(value);
+			else if (p == Int32)
+				Overflow<int32_t> test(value);
+			else if (p == Int64)
+				Overflow<int64_t> test(value);
+			return (fac.createOperand(p, std::to_string(value)));
+		}
+		else
+			throw Operation::XorErrorException();
 	}
 
 private:

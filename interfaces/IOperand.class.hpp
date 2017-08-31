@@ -7,6 +7,7 @@ enum eOperandType
 	Int8,
 	Int16,
 	Int32,
+	Int64,
 	Float,
 	Double
 };
@@ -21,6 +22,9 @@ public:
 	virtual IOperand const * operator*( IOperand const & rhs ) const = 0; // Product
 	virtual IOperand const * operator/( IOperand const & rhs ) const = 0; // Quotient
 	virtual IOperand const * operator%( IOperand const & rhs ) const = 0; // Modulo
+	virtual IOperand const * operator&( IOperand const & rhs ) const = 0; // And
+	virtual IOperand const * operator|( IOperand const & rhs ) const = 0; // Or
+	virtual IOperand const * operator^( IOperand const & rhs ) const = 0; // Xor
 	virtual std::string const & toString( void ) const = 0; // String representation of the instance
 	virtual ~IOperand( void ) {}
 };

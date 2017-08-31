@@ -1,4 +1,4 @@
-#include "Div.class.hpp"
+#include "Xor.class.hpp"
 
 // STATIC ########################################################
 
@@ -6,18 +6,18 @@
 
 // CANONICAL #####################################################
 
-Div::Div ( void )
+Xor::Xor ( void )
 {
 	return ;
 }
 
-Div::Div ( Div const & src )
+Xor::Xor ( Xor const & src )
 {
 	*this = src;
 	return ;
 }
 
-Div &				Div::operator=( Div const & rhs )
+Xor &				Xor::operator=( Xor const & rhs )
 {
 	if (this != &rhs)
 	{
@@ -26,7 +26,7 @@ Div &				Div::operator=( Div const & rhs )
 	return (*this);
 }
 
-Div::~Div ( void )
+Xor::~Xor ( void )
 {
 	return ;
 }
@@ -39,7 +39,7 @@ Div::~Div ( void )
 
 // OVERLOAD OPERATOR #############################################
 
-std::ostream &				operator<<(std::ostream & o, Div const & i)
+std::ostream &				operator<<(std::ostream & o, Xor const & i)
 {
 	(void)i;
 	return (o);
@@ -49,13 +49,13 @@ std::ostream &				operator<<(std::ostream & o, Div const & i)
 
 // PUBLIC METHOD #################################################
 
-void Div::Execute(std::vector<IOperand const *> * stack)
+void Xor::Execute(std::vector<IOperand const *> * stack)
 {
 	if (stack->size() >= 2)
 	{
 		IOperand const * tmp1 = *(stack->begin());
 		IOperand const * tmp2 = *(stack->begin() + 1);
-		IOperand const * newop = *tmp2 / *tmp1;
+		IOperand const * newop = *tmp2 ^ *tmp1;
 		delete tmp1;
 		stack->erase((*stack).begin());
 		delete tmp2;
@@ -82,9 +82,9 @@ void Div::Execute(std::vector<IOperand const *> * stack)
 
 // EXCEPTION METHOD ##############################################
 
-const char *Div::NotEnoughElementsException::what() const throw()
+const char *Xor::NotEnoughElementsException::what() const throw()
 {
-		return ("Not Enough Elements in stack");
+	return ("Not Enough Elements in stack");
 }
 
 // ###############################################################

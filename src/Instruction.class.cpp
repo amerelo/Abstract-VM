@@ -59,15 +59,17 @@ bool Instruction::needValue()
 void Instruction::getValue(std::string type, std::string value)
 {
 	if (type == "int8")
-		_type = Int8;
+		this->_type = Int8;
 	else if (type == "int16")
-		_type = Int16;
+		this->_type = Int16;
 	else if (type == "int32")
-		_type = Int32;
+		this->_type = Int32;
+	else if (type == "int64")
+		this->_type = Int64;
 	else if (type == "float")
-		_type = Float;
+		this->_type = Float;
 	else if (type == "double")
-		_type = Double;
+		this->_type = Double;
 
 	this->_value = value;
 	return ;

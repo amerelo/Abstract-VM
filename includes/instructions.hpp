@@ -12,5 +12,8 @@
 # include "Mod.class.hpp"
 # include "Print.class.hpp"
 # include "Exit.class.hpp"
+# include "And.class.hpp"
+# include "Or.class.hpp"
+# include "Xor.class.hpp"
 
 #endif

@@ -55,9 +55,12 @@ void Mod::Execute(std::vector<IOperand const *> * stack)
 	{
 		IOperand const * tmp1 = *(stack->begin());
 		IOperand const * tmp2 = *(stack->begin() + 1);
-		stack->erase(stack->begin());
-		stack->erase(stack->begin());
-		stack->insert(stack->begin(), *tmp2 % *tmp1);
+		IOperand const * newop = *tmp2 % *tmp1;
+		delete tmp1;
+		stack->erase((*stack).begin());
+		delete tmp2;
+		stack->erase((*stack).begin());
+		stack->insert(stack->begin(), newop);
 	}
 	else
 		throw NotEnoughElementsException();

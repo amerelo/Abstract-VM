@@ -51,13 +51,13 @@ std::ostream &		operator<<(std::ostream & o, Lexer const & i)
 
 Instruction *Lexer::Instruction_format(std::string line, int nline, std::map<std::string, Instruction *> my_map)
 {
+	std::smatch match;
 	std::istringstream iss(line);
 	std::vector<std::string> tokens { std::istream_iterator<std::string>{iss}, std::istream_iterator<std::string>{} };
-	std::regex txt_regex("^(int8|int16|int32|float|double)\\(([\\+|\\-]?\\d+\\.?\\d+?)\\)$");
-	std::smatch match;
+	std::vector<std::regex> regexes { std::regex("^(int8|int16|int32|int64|)\\(([\\+|\\-]?\\d+)\\)$"),  std::regex("^(float|double)\\(([\\+|\\-]?\\d+\\.\\d+)\\)$") };
 
 	auto search = my_map.find(*tokens.begin());
-	if (search == my_map.end())
+	if (search == my_map.end() || (tokens.size() < 2 && search->second->needValue()))
 	{
 		std::cerr << *tokens.begin() << " command not found in line " << nline << std::endl;
 		return (NULL);
@@ -69,16 +69,16 @@ Instruction *Lexer::Instruction_format(std::string line, int nline, std::map<std
 		instruction = new Assert();
 	for (size_t c_nbr = 1; c_nbr < tokens.size(); c_nbr++)
 	{
-		if (c_nbr == 1 && search->second->needValue())
-		{
-			std::regex_search(tokens[1], match, txt_regex);
+		for (size_t i = 0; i < regexes.size() && match.size() == 0; i++)
+			std::regex_search(tokens[c_nbr], match, regexes[i]);
+		if (c_nbr == 1 && search->second->needValue() && match.size() == 3)
 			instruction->getValue(match[1], match[2]);
-		}
-		else if ( (search->second->needValue() && c_nbr < 2 && !std::regex_match(tokens[c_nbr], txt_regex)) ||
+		else if ((search->second->needValue() && c_nbr < 2 && match.size() != 3) ||
 			(c_nbr >= 2 || !search->second->needValue()))
 		{
 			std::cerr << tokens[c_nbr] << " No Valid Command in line " << nline << std::endl;
-			// delete instruction;
+			if (search->second->needValue())
+				delete instruction;
 			return (NULL);
 		}
 	}
@@ -87,7 +87,7 @@ Instruction *Lexer::Instruction_format(std::string line, int nline, std::map<std
 
 std::vector<Instruction *> Lexer::getfile(char *file, std::map<std::string, Instruction *> my_map)
 {
-	int nline = 0;
+	int nline = 1;
 	int nerror = 0;
 	std::string line;
 	Instruction *instruction;
@@ -99,7 +99,7 @@ std::vector<Instruction *> Lexer::getfile(char *file, std::map<std::string, Inst
 		this->rm_comment(&line);
 		if (!std::all_of(line.begin(), line.end(), isspace))
 		{
-			if ((instruction = this->Instruction_format(line, nline, my_map)))
+			if ((instruction = this->Instruction_format(line, nline, my_map)) != NULL)
 				iList.push_back(instruction);
 			else
 				nerror++;

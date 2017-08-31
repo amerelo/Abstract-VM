@@ -29,6 +29,9 @@ class Execute
 
 		Execute &							operator=( Execute const & rhs );
 		friend std::ostream &				operator<<(std::ostream & o, Execute const & i);
+
+	private:
+		void DeleteV (std::vector<IOperand const *> *stack, std::vector<Instruction *> *iList);
 };
 
 #endif
